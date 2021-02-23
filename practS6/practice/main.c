@@ -43,17 +43,20 @@
 
 #include <stdint.h>
 #include "mcc_generated_files/mcc.h"
-#include "sensor_gn.c"
-#include "sensor_dn.c"
+#include "sensor_gn.h"
+#include "sensor_dn.h"
+#include "sensor_ac.h"
 /*
                          Main application
  */
 
-#define SENSORS 3
+#define SENSORS 4
 
 #define SENPTID 0
 #define SENGNID 1
 #define SENDNID 2
+#define SENACID 3
+
 
 #define REGISTER(iopen, iget, iclose, id, control) \
   control[id].open = iopen;                        \
@@ -99,6 +102,7 @@ void main(void)
   REGISTER(&myopen, &myget, &myclose, SENPTID, all_sensors);
   REGISTER(&myopen_gn, &myget_gn, &myclose_gn, SENGNID, all_sensors);
   REGISTER(&myopen_dn, &myget_dn, &myclose_dn, SENDNID, all_sensors);
+  REGISTER(&myopen_ac, &myget_ac, &myclose_ac, SENACID, all_sensors);
 
   for (int i = 0; i < SENSORS; i++)
   {
